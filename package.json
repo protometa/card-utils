@@ -7,5 +7,9 @@
     "test": "mocha"
   },
   "author": "Luke Nimtz <luke.nimtz@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "mocha": "^2.3.2",
+    "should": "^7.1.0"
+  }
 }
