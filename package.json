@@ -1,7 +1,11 @@
 {
   "name": "card-utils",
   "version": "1.0.0",
-  "description": "Sorts and shuffles deck of cards.",
+  "description": "Utilies for playing cards.",
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/protometa/card-utils.git"
+  },
   "main": "index.js",
   "scripts": {
     "test": "mocha"
