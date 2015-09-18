@@ -8,11 +8,13 @@ Utilies for playing cards.
   
 ## Usage
 
-    var cardUtils = require('card-utils);
+```javascript
+var cardUtils = require('card-utils);
   
-    var deck = cardUtils.generateDeck();
-    var shuffled = cardUtils.shuffle(deck);
-    var sorted = cardUtils.sort(shuffled);
+var deck = cardUtils.generateDeck();
+var shuffled = cardUtils.shuffle(deck);
+var sorted = cardUtils.sort(shuffled);
+```
 
 ## Tests
 
