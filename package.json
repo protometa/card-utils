@@ -1,5 +1,5 @@
 {
-  "name": "protometa-deck",
+  "name": "protometa-cards",
   "version": "1.0.0",
   "description": "Deck of cards that sorts and shuffles.",
   "main": "index.js",
