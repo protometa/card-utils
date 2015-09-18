@@ -9,7 +9,7 @@ Utilies for playing cards.
 ## Usage
 
 ```javascript
-var cardUtils = require('card-utils);
+var cardUtils = require('card-utils');
   
 var deck = cardUtils.generateDeck();
 var shuffled = cardUtils.shuffle(deck);
