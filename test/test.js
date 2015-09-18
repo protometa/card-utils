@@ -146,7 +146,7 @@ describe('shuffle()', function() {
 
     cardUtils.isPracticallyShuffled.called.should.be.true();
     cardUtils.isPracticallyShuffled.lastCall.returnValue.should.be.true();
-    cardUtils.validDeck(shuffled)
+    cardUtils.validDeck(shuffled).should.be.true();
     cardUtils.isPracticallyShuffled(shuffled).should.be.true();
 
     cardUtils.isPracticallyShuffled.restore()
