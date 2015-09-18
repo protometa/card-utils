@@ -61,9 +61,23 @@ var testCards = [
 
 describe('Deck', function () {
 
+	var deck;
+
+	beforeEach(function () {
+		deck = new Cards.Deck();
+	})
+
 	it('starts with the expected set of cards', function () {
-		var deck = new Cards.Deck();
 		deck.cards.should.eql(testCards)
+	})
+
+	describe('shuffle()', function () {
+
+		it('shuffles the cards', function () {
+			deck.shuffle()
+			console.log(deck.cards)
+		})
+
 	})
 
 	

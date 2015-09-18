@@ -15,6 +15,22 @@ function Deck () {
 }
 
 
+Deck.prototype.shuffle = function() {
+	var shuffled = []
+
+	while	(this.cards.length > 0){
+		shuffled.push( this.drawRandom() );
+	}
+
+	this.cards = shuffled;
+};
+
+
+Deck.prototype.drawRandom = function() {
+	return this.cards.splice( Math.floor( Math.random() * this.cards.length), 1)[0]
+};
+
+
 
 exports.Deck = Deck;
 
