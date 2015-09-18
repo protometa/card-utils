@@ -78,12 +78,12 @@ var self = module.exports = {
   },
 
   isPracticallyShuffled: function (cards) {
-    // returns false if at least 5 cards are still in original order
+    // returns false if at least 5 cards are still in original deck order
     var successiveCount = 0;
     for (var i = 0; i < cards.length - 1; i++) {
       if ( self.successive(cards[i], cards[i+1]) ) {
         successiveCount++;
-        if (successiveCount > 1) return false;
+        if (successiveCount > 5) return false;
       } else { 
         successiveCount = 0;
       };
