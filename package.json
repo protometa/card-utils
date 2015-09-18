@@ -1,10 +1,10 @@
 {
   "name": "card-utils",
-  "version": "1.0.0",
+  "version": "v1.0.0",
   "description": "Utilies for playing cards.",
-  "repository" : {
-    "type" : "git",
-    "url" : "https://github.com/protometa/card-utils.git"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/protometa/card-utils.git"
   },
   "main": "index.js",
   "scripts": {
