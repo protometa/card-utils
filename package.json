@@ -1,0 +1,11 @@
+{
+  "name": "protometa-deck",
+  "version": "1.0.0",
+  "description": "Deck of cards that sorts and shuffles.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "Luke Nimtz <luke.nimtz@gmail.com>",
+  "license": "MIT"
+}
