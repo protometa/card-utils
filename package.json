@@ -1,7 +1,7 @@
 {
-  "name": "protometa-cards",
+  "name": "card-utils",
   "version": "1.0.0",
-  "description": "Deck of cards that sorts and shuffles.",
+  "description": "Sorts and shuffles deck of cards.",
   "main": "index.js",
   "scripts": {
     "test": "mocha"
@@ -10,6 +10,7 @@
   "license": "MIT",
   "devDependencies": {
     "mocha": "^2.3.2",
-    "should": "^7.1.0"
+    "should": "^7.1.0",
+    "sinon": "^1.16.1"
   }
 }

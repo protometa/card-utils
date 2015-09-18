@@ -1,81 +1,126 @@
 'use strict';
 
-var suits = ['Spades', 'Clubs', 'Diamonds', 'Hearts'];
-var ranks = ['Ace','2','3','4','5','6','7','8','9','10','Jack','Queen','King'];
+var self = module.exports = {
 
+  suits: ['Spades', 'Clubs', 'Diamonds', 'Hearts'],
+  ranks: ['Ace','2','3','4','5','6','7','8','9','10','Jack','Queen','King'],
 
-function ordered (a, b) {
-  // returns true if a comes before b in sorted deck, false if not
-  var aSuitIndex = suits.indexOf(a.suit);
-  var bSuitIndex = suits.indexOf(b.suit);
-  if (aSuitIndex < bSuitIndex) {
-    return true;
-  } else if (aSuitIndex > bSuitIndex) {
-    return false;
-  } else {
-    return ranks.indexOf(a.rank) < ranks.indexOf(b.rank);
-  }
-}
+  ordered: function  (cardA, cardB) {
+    // returns true if cardA comes before cardB in sorted deck, false if not
+    if (cardA.suit === cardB.suit && cardA.rank === cardB.rank) {
+      throw new Error('cannot determine order of identical cards');
+    };
+    var aSuitIndex = self.suits.indexOf(cardA.suit);
+    var bSuitIndex = self.suits.indexOf(cardB.suit);
+    var aRankIndex = self.ranks.indexOf(cardA.rank);
+    var bRankIndex = self.ranks.indexOf(cardB.rank);
 
-function successive (a, b) {
-  // returns true if b comes directly after a in sorted deck
-  (ranks.indexOf(b.rank) - ranks.indexOf(a.rank) == 1) &&
-  (suits.indexOf(b.suit) - suits.indexOf(a.suit) == 1)
-}
+    if ( aSuitIndex < 0
+      || bSuitIndex < 0
+      || aRankIndex < 0
+      || bRankIndex < 0
+    ) {
+      throw new Error('invalid cards');
+    }
 
+    if (aSuitIndex < bSuitIndex) {
+      return true;
+    } else if (aSuitIndex > bSuitIndex) {
+      return false;
+    } else {
+      return  aRankIndex < bRankIndex;
+    }
+  },
 
-// I might put something like this in it's own module with it's own tests
-// if it didn't already exist on npm, in which case I would use the exisiting
-function qsort (arr) {
-  // recursive quicksort
-  if (arr.length === 0) return arr;
-  var testCard = arr.pop();
-  var left = qsort( arr.filter(function (card) { return ordered(card, testCard); }) );
-  var right = qsort( arr.filter(function (card) { return ordered(testCard, card); }) );
-  return left.concat(testCard, right);
-}
+  successive: function (cardA, cardB) {
+    // returns true if cardB comes directly after cardA in same suit
+    return cardA.suit === cardB.suit &&
+    self.ranks.indexOf(cardB.rank) - self.ranks.indexOf(cardA.rank) === 1 
+  },
 
+  sort: function (cards) {
+    // recursive quicksort
+    if (cards.length === 0) return cards;
+    var pivotCard = cards.pop();
+    var left = self.sort( cards.filter(function (card) {
+      return self.ordered(card, pivotCard);
+    }));
+    var right = self.sort( cards.filter(function (card) {
+      return self.ordered(pivotCard, card);
+    }));
+    return left.concat(pivotCard, right);
+  },
 
-
-function Deck () {
-  this.cards = [];
-  var that = this;
-  suits.forEach(function (suit) {
-    ranks.forEach(function (rank) {
-      that.cards.push({suit: suit, rank: rank});
+  generateDeck: function () {
+    var deck = [];
+    self.suits.forEach(function (suit) {
+      self.ranks.forEach(function (rank) {
+        deck.push({suit: suit, rank: rank});
+      })
     })
-  })
-}
+    return deck;
+  },
+
+  validDeck: function (deck) {
+    if (deck.length !== (52)) return false;
+    for (var i1 = 0; i1 < deck.length; i1++) {
+      var card = deck[i1];
+      if (self.suits.indexOf(card.suit) < 0) return false;
+      if (self.ranks.indexOf(card.rank) < 0) return false;
+      // cards should all be unique
+      for (var i2 = i1+1; i2 < deck.length; i2++) {
+        if (card.suit === deck[i2].suit && card.rank === deck[i2].rank) {
+          return false;
+        };
+      };
+    };
+    return true;
+  },
+
+  isPracticallyShuffled: function (cards) {
+    // returns false if at least 5 cards are still in original order
+    var successiveCount = 0;
+    for (var i = 0; i < cards.length - 1; i++) {
+      if ( self.successive(cards[i], cards[i+1]) ) {
+        successiveCount++;
+        if (successiveCount > 1) return false;
+      } else { 
+        successiveCount = 0;
+      };
+    };
+    return true;
+  },
+
+  shuffle: function (cards) {
+    // randomish shuffle
+    var shuffled = null;
+    do {
+        var cards = shuffled || cards.slice();
+        shuffled = [];
+        while (cards.length > 0){
+          shuffled.push( self.drawRandom(cards) );
+        }
+      } while (self.isPracticallyShuffled(shuffled) === false)
+      return shuffled;
+  },
+
+  drawRandom: function (cards) {
+    return cards.splice( Math.floor( Math.random() * cards.length), 1)[0];
+  },
 
 
-Deck.prototype.shuffle = function() {
-  var shuffled = [];
-  while (this.cards.length > 0){
-    shuffled.push( this.drawRandom() );
-  }
-  this.cards = shuffled;
 };
 
 
-Deck.prototype.isPracticallyShuffled = function() {
-  // returns false if at least 5 cards are still in original order
-  for (var i = 0; i < this.cards.length - 5; i++) {
-    this.cards.slice(i, 5)
-  };
-};
-
-
-Deck.prototype.drawRandom = function() {
-  return this.cards.splice( Math.floor( Math.random() * this.cards.length), 1)[0];
-};
-
-
-Deck.prototype.sort = function() {
-  this.cards = qsort(this.cards.slice());
-};
 
 
 
 
-exports.Deck = Deck;
+
+
+
+
+
+
+
 
