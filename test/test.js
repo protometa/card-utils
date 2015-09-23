@@ -113,6 +113,12 @@ describe('sort()', function() {
     sorted.should.eql(testDecks.sorted);
   });
 
+  it('does not modify the array', function () {
+    var shuffled = testDecks.shuffled.slice();
+    cardUtils.sort(shuffled);
+    shuffled.should.be.eql(testDecks.shuffled);
+  })
+
 });
 
 

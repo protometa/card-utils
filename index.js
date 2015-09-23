@@ -41,6 +41,7 @@ var self = module.exports = {
   sort: function (cards) {
     // recursive quicksort
     if (cards.length === 0) return cards;
+    cards = cards.slice();
     var pivotCard = cards.pop();
     var left = self.sort( cards.filter(function (card) {
       return self.ordered(card, pivotCard);
