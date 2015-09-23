@@ -1,19 +1,20 @@
 'use strict';
 
-var self = module.exports = {
+var suits = ['Spades', 'Clubs', 'Diamonds', 'Hearts'];
+var ranks = ['Ace','2','3','4','5','6','7','8','9','10','Jack','Queen','King'];
 
-  suits: ['Spades', 'Clubs', 'Diamonds', 'Hearts'],
-  ranks: ['Ace','2','3','4','5','6','7','8','9','10','Jack','Queen','King'],
+
+var self = module.exports = {
 
   ordered: function  (cardA, cardB) {
     // returns true if cardA comes before cardB in sorted deck, false if not
     if (cardA.suit === cardB.suit && cardA.rank === cardB.rank) {
       throw new Error('cannot determine order of identical cards');
     };
-    var aSuitIndex = self.suits.indexOf(cardA.suit);
-    var bSuitIndex = self.suits.indexOf(cardB.suit);
-    var aRankIndex = self.ranks.indexOf(cardA.rank);
-    var bRankIndex = self.ranks.indexOf(cardB.rank);
+    var aSuitIndex = suits.indexOf(cardA.suit);
+    var bSuitIndex = suits.indexOf(cardB.suit);
+    var aRankIndex = ranks.indexOf(cardA.rank);
+    var bRankIndex = ranks.indexOf(cardB.rank);
 
     if ( aSuitIndex < 0
       || bSuitIndex < 0
@@ -35,7 +36,7 @@ var self = module.exports = {
   successive: function (cardA, cardB) {
     // returns true if cardB comes directly after cardA in same suit
     return cardA.suit === cardB.suit &&
-    self.ranks.indexOf(cardB.rank) - self.ranks.indexOf(cardA.rank) === 1 
+    ranks.indexOf(cardB.rank) - ranks.indexOf(cardA.rank) === 1 
   },
 
   sort: function (cards) {
@@ -54,8 +55,8 @@ var self = module.exports = {
 
   generateDeck: function () {
     var deck = [];
-    self.suits.forEach(function (suit) {
-      self.ranks.forEach(function (rank) {
+    suits.forEach(function (suit) {
+      ranks.forEach(function (rank) {
         deck.push({suit: suit, rank: rank});
       })
     })
@@ -66,8 +67,8 @@ var self = module.exports = {
     if (deck.length !== (52)) return false;
     for (var i1 = 0; i1 < deck.length; i1++) {
       var card = deck[i1];
-      if (self.suits.indexOf(card.suit) < 0) return false;
-      if (self.ranks.indexOf(card.rank) < 0) return false;
+      if (suits.indexOf(card.suit) < 0) return false;
+      if (ranks.indexOf(card.rank) < 0) return false;
       // cards should all be unique
       for (var i2 = i1+1; i2 < deck.length; i2++) {
         if (card.suit === deck[i2].suit && card.rank === deck[i2].rank) {
